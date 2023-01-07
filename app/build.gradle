@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -26,16 +27,33 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+    }
 }
 
 dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
 
+    // UI
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
 
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    implementation "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    annotationProcessor "com.google.dagger:hilt-compiler:$hiltVersion"
+
+
+    // Testing
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidJunitVersion"
-    androidTestImplementation "androidx.test.espresso:$esspresoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$esspresoVersion"
 }
