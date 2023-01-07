@@ -1,8 +1,10 @@
-package com.harutyun.githubtrendingrepositories;
+package com.harutyun.githubtrendingrepositories.presentation.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.harutyun.githubtrendingrepositories.R;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
