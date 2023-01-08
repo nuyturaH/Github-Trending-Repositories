@@ -22,11 +22,12 @@ ext {
     // App dependencies
     appcompatVersion = "1.5.1"
     materialVersion = "1.7.0"
+    navVersion = "2.5.3"
     retrofitVersion = "2.9.0"
     okhttpVersion = "4.10.0"
     hiltVersion = "2.44.2"
 
     junitVersion = "4.13.2"
-    androidJunitVersion = "1.1.4"
+    androidJunitVersion = "1.1.5"
     esspresoVersion = "3.5.1"
 }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Material3.CardView.Outlined"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp"
+    app:contentPaddingBottom="16dp"
+    app:contentPaddingLeft="16dp"
+    app:contentPaddingRight="16dp"
+    app:contentPaddingTop="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_name_item_repo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Github-Repo-Name" />
+
+        <TextView
+            android:id="@+id/tv_description_item_repo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintStart_toStartOf="@+id/tv_name_item_repo"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_item_repo"
+            tools:text="@tools:sample/lorem/random" />
+
+        <ImageView
+            android:id="@+id/iv_star_item_repo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/star"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description_item_repo"
+            app:srcCompat="@drawable/ic_star" />
+
+        <TextView
+            android:id="@+id/tv_stargazers_count_item_repo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_star_item_repo"
+            app:layout_constraintStart_toEndOf="@+id/iv_star_item_repo"
+            app:layout_constraintTop_toTopOf="@+id/iv_star_item_repo"
+            tools:text="42345" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_avatar_item_repo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_stargazers_count_item_repo"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description_item_repo"
+            app:shapeAppearance="@style/roundedCornersImageView"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_login_item_repo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_avatar_item_repo"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar_item_repo"
+            app:layout_constraintTop_toTopOf="@+id/iv_avatar_item_repo"
+            tools:text="@tools:sample/first_names" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

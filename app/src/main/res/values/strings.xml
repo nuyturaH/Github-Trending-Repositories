@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Github Trending Repositories</string>
+    <string name="search_repositories">Search repositories</string>
+    <string name="search">Search</string>
+    <string name="filter_by_date_range">Filter by Date range</string>
+    <string name="github_trending_repositories">Github trending repositories</string>
+    <string name="star">star</string>
+    <string name="last_day">Last day</string>
+    <string name="last_week">Last week</string>
+    <string name="last_year">Last year</string>
+    <string name="clear">clear</string>
 </resources>
