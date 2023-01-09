@@ -9,7 +9,7 @@ public class GithubRepoEntity {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("node_id")
     @Expose
     private String nodeId;
@@ -248,11 +248,11 @@ public class GithubRepoEntity {
     @Expose
     private Double score;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

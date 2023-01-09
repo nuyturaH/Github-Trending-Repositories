@@ -1,11 +1,14 @@
 package com.harutyun.data.repository;
 
+import androidx.paging.PagingData;
+
 import com.harutyun.data.remote.GithubReposRemoteDataSource;
 import com.harutyun.domain.models.GithubRepo;
 import com.harutyun.domain.repository.GithubRepoRepository;
 
 import java.util.Date;
-import java.util.List;
+
+import io.reactivex.rxjava3.core.Flowable;
 
 public class GithubRepoRepositoryImpl implements GithubRepoRepository {
 
@@ -16,7 +19,7 @@ public class GithubRepoRepositoryImpl implements GithubRepoRepository {
     }
 
     @Override
-    public List<GithubRepo> GetTrendingReposByNameCreatedLaterThanXUseCase(String name, Date x) {
-        return null;
+    public Flowable<PagingData<GithubRepo>> getTrendingReposByNameCreatedLaterThanX(String name, Date x) {
+        return mGithubReposRemoteDataSource.getTrendingReposByNameCreatedLaterThanXUseCase(name, x);
     }
 }

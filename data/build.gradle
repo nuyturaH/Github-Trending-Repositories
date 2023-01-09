@@ -21,6 +21,8 @@ android {
         }
         debug {
             buildConfigField "String", "BASE_URL", "\"https://api.github.com/\""
+            buildConfigField "int", "GITHUB_REPOS_BEGINNING_PAGE", "1"
+            buildConfigField "int", "GITHUB_REPOS_PAGE_SIZE", "30"
         }
     }
     compileOptions {
@@ -38,6 +40,10 @@ dependencies {
 
     // Okhttp
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    implementation "androidx.paging:paging-rxjava3:$pagingVersion"
 
     // Testing
     testImplementation "junit:junit:$junitVersion"

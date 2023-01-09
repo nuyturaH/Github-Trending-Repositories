@@ -9,7 +9,12 @@ public class GithubRepo {
     private Integer stargazersCount;
     private Owner owner;
 
-    public GithubRepo() {
+    public GithubRepo(Long id, String name, String description, Integer stargazersCount, Owner owner) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.stargazersCount = stargazersCount;
+        this.owner = owner;
     }
 
     public Long getId() {

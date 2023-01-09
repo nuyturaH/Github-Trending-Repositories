@@ -7,7 +7,10 @@ public class Owner {
     private String login;
     private String avatarUrl;
 
-    public Owner() {
+    public Owner(Long id, String login, String avatarUrl) {
+        this.id = id;
+        this.login = login;
+        this.avatarUrl = avatarUrl;
     }
 
     public Long getId() {

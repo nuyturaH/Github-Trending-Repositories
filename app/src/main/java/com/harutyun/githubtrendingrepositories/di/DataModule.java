@@ -1,6 +1,7 @@
 package com.harutyun.githubtrendingrepositories.di;
 
 import com.harutyun.data.BuildConfig;
+import com.harutyun.data.mappers.GithubRepoMapper;
 import com.harutyun.data.remote.GithubReposRemoteDataSource;
 import com.harutyun.data.remote.GithubReposService;
 import com.harutyun.data.remote.GithubReposServiceDataSource;
@@ -24,8 +25,14 @@ public class DataModule {
 
     @Singleton
     @Provides
-    GithubReposRemoteDataSource provideGithubReposRemoteDataSource(GithubReposService trendingRepositoriesApi) {
-        return new GithubReposServiceDataSource(trendingRepositoriesApi);
+    GithubReposRemoteDataSource provideGithubReposRemoteDataSource(GithubReposService trendingRepositoriesApi, GithubRepoMapper githubRepoMapper) {
+        return new GithubReposServiceDataSource(trendingRepositoriesApi, githubRepoMapper);
+    }
+
+    @Singleton
+    @Provides
+    GithubRepoMapper provideGithubRepoMapper() {
+        return new GithubRepoMapper();
     }
 
     @Singleton
