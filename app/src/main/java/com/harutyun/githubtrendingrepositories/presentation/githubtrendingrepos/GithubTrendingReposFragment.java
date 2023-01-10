@@ -23,6 +23,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.paging.LoadState;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.harutyun.data.remote.NoNetworkConnectionException;
 import com.harutyun.githubtrendingrepositories.R;
@@ -154,6 +155,23 @@ public class GithubTrendingReposFragment extends Fragment {
 
             mGithubTrendingReposViewModel.setNoDataMutableLiveData(combinedLoadStates.getRefresh() instanceof LoadState.NotLoading && combinedLoadStates.getAppend().getEndOfPaginationReached() && mGithubReposAdapter.getItemCount() < 1);
             return null;
+        });
+
+        // Github repositories recyclerview
+        mBinding.rvTrendingRepos.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && mBinding.fabFavouritesTrendingRepos.isExtended()) {
+                    mBinding.fabFavouritesTrendingRepos.shrink();
+                } else if (dy < 0 && !mBinding.fabFavouritesTrendingRepos.isExtended()) {
+                    mBinding.fabFavouritesTrendingRepos.extend();
+                }
+            }
         });
     }
 
