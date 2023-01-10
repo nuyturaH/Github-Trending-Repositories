@@ -73,6 +73,12 @@ dependencies {
     // AutoDispose
     implementation "com.uber.autodispose2:autodispose-androidx-lifecycle:$autodisposeVersion"
 
+    // Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+
+    // RxAndroid
+    implementation "io.reactivex.rxjava3:rxandroid:$rxAndroidVersion"
+
 
     // Testing
     testImplementation "junit:junit:$junitVersion"

@@ -32,9 +32,6 @@ public class GithubTrendingReposViewModel extends ViewModel {
     private final MutableLiveData<Boolean> noDataMutableLiveData = new MutableLiveData<>();
     public final LiveData<Boolean> noDataLiveData = noDataMutableLiveData;
 
-    private final MutableLiveData<GithubRepo> currentRepoMutableLiveData = new MutableLiveData<>();
-    public final LiveData<GithubRepo> currentRepoDataLiveData = currentRepoMutableLiveData;
-
 
     @Inject
     public GithubTrendingReposViewModel(GetTrendingReposByNameCreatedLaterThanXUseCase getTrendingReposByNameCreatedLaterThanXUseCase) {
@@ -75,13 +72,5 @@ public class GithubTrendingReposViewModel extends ViewModel {
 
     public LiveData<Boolean> getNoDataLiveData() {
         return noDataLiveData;
-    }
-
-    public void setCurrentRepoMutableLiveData(GithubRepo currentRepoMutableLiveData) {
-        this.currentRepoMutableLiveData.setValue(currentRepoMutableLiveData);
-    }
-
-    public LiveData<GithubRepo> getCurrentRepoDataLiveData() {
-        return currentRepoDataLiveData;
     }
 }

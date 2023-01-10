@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/iv_favourite_item_repo"
             app:layout_constraintStart_toStartOf="@+id/tv_name_item_repo"
             app:layout_constraintTop_toBottomOf="@+id/tv_name_item_repo"
             tools:text="@tools:sample/lorem/random" />
@@ -83,7 +83,7 @@
             tools:text="@tools:sample/first_names" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_favourite_item_repo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/favourites"

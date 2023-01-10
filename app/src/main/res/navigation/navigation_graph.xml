@@ -11,15 +11,28 @@
         android:label="fragment_github_trending_repos"
         tools:layout="@layout/fragment_github_trending_repos" >
         <action
-            android:id="@+id/action_currencyConverterFragment_to_githubRepoDetailsFragment"
+            android:id="@+id/action_githubTrendingReposFragment_to_githubRepoDetailsFragment"
             app:destination="@id/githubRepoDetailsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim" />
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_githubTrendingReposFragment_to_githubFavouriteReposFragment"
+            app:destination="@id/githubFavouriteReposFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/githubRepoDetailsFragment"
         android:name="com.harutyun.githubtrendingrepositories.presentation.githubrepodetails.GithubRepoDetailsFragment"
         android:label="GithubRepoDetailsFragment"
         tools:layout="@layout/fragment_github_repo_details"/>
+    <fragment
+        android:id="@+id/githubFavouriteReposFragment"
+        android:name="com.harutyun.githubtrendingrepositories.presentation.githubfavouriterepos.GithubFavouriteReposFragment"
+        android:label="fragment_github_favourite_repos"
+        tools:layout="@layout/fragment_github_favourite_repos" />
 </navigation>

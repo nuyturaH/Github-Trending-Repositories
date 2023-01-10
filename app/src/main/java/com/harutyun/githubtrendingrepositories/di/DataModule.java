@@ -1,8 +1,15 @@
 package com.harutyun.githubtrendingrepositories.di;
 
+import android.app.Application;
 import android.content.Context;
 
+import androidx.room.Room;
+
 import com.harutyun.data.BuildConfig;
+import com.harutyun.data.local.GithubReposLocalDataSource;
+import com.harutyun.data.local.RoomGithubRepoDatabase;
+import com.harutyun.data.local.RoomGithubReposDao;
+import com.harutyun.data.local.RoomGithubReposLocalDataSource;
 import com.harutyun.data.mappers.GithubRepoMapper;
 import com.harutyun.data.remote.GithubReposRemoteDataSource;
 import com.harutyun.data.remote.GithubReposService;
@@ -41,8 +48,10 @@ public class DataModule {
 
     @Singleton
     @Provides
-    GithubRepoRepository provideGithubRepoRepository(GithubReposRemoteDataSource remoteDataSource) {
-        return new GithubRepoRepositoryImpl(remoteDataSource);
+    GithubRepoRepository provideGithubRepoRepository(GithubReposRemoteDataSource remoteDataSource,
+                                                     GithubReposLocalDataSource githubReposLocalDataSource,
+                                                     GithubRepoMapper githubRepoMapper) {
+        return new GithubRepoRepositoryImpl(remoteDataSource, githubReposLocalDataSource, githubRepoMapper);
     }
 
     @Singleton
@@ -75,4 +84,23 @@ public class DataModule {
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
     }
+
+    @Singleton
+    @Provides
+    RoomGithubRepoDatabase provideRoomGithubRepoDatabase(@ApplicationContext Context context) {
+        return Room.databaseBuilder(context, RoomGithubRepoDatabase.class, "GithubRepoDatabase.db").build();
+    }
+
+    @Singleton
+    @Provides
+    RoomGithubReposDao provideRoomGithubReposDao(RoomGithubRepoDatabase githubRepoDatabase) {
+        return githubRepoDatabase.roomGithubReposDao();
+    }
+
+    @Singleton
+    @Provides
+    GithubReposLocalDataSource provideGithubReposLocalDataSource(RoomGithubReposDao roomGithubReposDao) {
+        return new RoomGithubReposLocalDataSource(roomGithubReposDao);
+    }
+
 }

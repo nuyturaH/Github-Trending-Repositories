@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.harutyun.data.remote.NoNetworkConnectionException;
 import com.harutyun.githubtrendingrepositories.R;
 import com.harutyun.githubtrendingrepositories.databinding.FragmentGithubTrendingReposBinding;
+import com.harutyun.githubtrendingrepositories.presentation.githubrepodetails.GithubRepoDetailsReposViewModel;
 import com.harutyun.githubtrendingrepositories.presentation.githubtrendingrepos.adapters.GithubReposAdapter;
 import com.harutyun.githubtrendingrepositories.presentation.githubtrendingrepos.adapters.GithubReposHeaderAdapter;
 import com.harutyun.githubtrendingrepositories.presentation.githubtrendingrepos.adapters.GithubReposLoadStateAdapter;
@@ -40,6 +41,7 @@ public class GithubTrendingReposFragment extends Fragment {
 
     private FragmentGithubTrendingReposBinding mBinding;
     private GithubTrendingReposViewModel mGithubTrendingReposViewModel;
+    private GithubRepoDetailsReposViewModel mGithubRepoDetailsReposViewModel;
     private GithubReposAdapter mGithubReposAdapter;
     private DateRange mCurrentDateRange = DateRange.LAST_DAY;
 
@@ -82,8 +84,8 @@ public class GithubTrendingReposFragment extends Fragment {
             }
         });
 
-        mGithubTrendingReposViewModel.getNoDataLiveData().observe(getViewLifecycleOwner(), isNoData -> {
-            mBinding.tvNoDataTrendingRepos.setVisibility(isNoData ? View.VISIBLE : View.GONE);
+        mGithubTrendingReposViewModel.getNoDataLiveData().observe(getViewLifecycleOwner(), hasNoData -> {
+            mBinding.tvNoDataTrendingRepos.setVisibility(hasNoData ? View.VISIBLE : View.GONE);
         });
     }
 
@@ -173,6 +175,11 @@ public class GithubTrendingReposFragment extends Fragment {
                 }
             }
         });
+
+        // Favourites FAB
+        mBinding.fabFavouritesTrendingRepos.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(R.id.action_githubTrendingReposFragment_to_githubFavouriteReposFragment);
+        });
     }
 
     private void getGithubTrendingRepos(DateRange dateRange) {
@@ -217,11 +224,11 @@ public class GithubTrendingReposFragment extends Fragment {
 
     private void setupTrendingRepositoriesRecyclerView() {
         mGithubReposAdapter = new GithubReposAdapter(githubRepo -> {
-            mGithubTrendingReposViewModel.setCurrentRepoMutableLiveData(githubRepo);
-            NavHostFragment.findNavController(this).navigate(R.id.action_currencyConverterFragment_to_githubRepoDetailsFragment);
+            mGithubRepoDetailsReposViewModel.setCurrentRepoMutableLiveData(githubRepo);
+            NavHostFragment.findNavController(this).navigate(R.id.action_githubTrendingReposFragment_to_githubRepoDetailsFragment);
         });
         GithubReposLoadStateAdapter githubReposLoadStateAdapter = new GithubReposLoadStateAdapter(v -> mGithubReposAdapter.retry());
-        GithubReposHeaderAdapter githubReposHeaderAdapter = new GithubReposHeaderAdapter();
+        GithubReposHeaderAdapter githubReposHeaderAdapter = new GithubReposHeaderAdapter(getString(R.string.github_trending_repositories));
         ConcatAdapter concatAdapter = new ConcatAdapter(githubReposHeaderAdapter, mGithubReposAdapter.withLoadStateFooter(githubReposLoadStateAdapter));
         mBinding.rvTrendingRepos.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
         mBinding.rvTrendingRepos.setAdapter(concatAdapter);
@@ -229,7 +236,8 @@ public class GithubTrendingReposFragment extends Fragment {
 
 
     private void initViewModel() {
-        mGithubTrendingReposViewModel = new ViewModelProvider(requireActivity()).get(GithubTrendingReposViewModel.class);
+        mGithubTrendingReposViewModel = new ViewModelProvider(this).get(GithubTrendingReposViewModel.class);
+        mGithubRepoDetailsReposViewModel = new ViewModelProvider(requireActivity()).get(GithubRepoDetailsReposViewModel.class);
     }
 
     @Override

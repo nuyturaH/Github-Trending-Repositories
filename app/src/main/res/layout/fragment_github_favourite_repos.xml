@@ -144,29 +144,16 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/tv_error_favourite_repos"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:drawablePadding="-8dp"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:drawableTopCompat="@drawable/ic_no_network"
-        tools:text="Some error happend. Swipe down to refresh"
-        tools:visibility="visible" />
-
-    <TextView
         android:id="@+id/tv_no_data_favourite_repos"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:drawablePadding="-8dp"
         android:gravity="center"
-        android:text="@string/no_repositories_found"
+        android:text="Your favourites list is empty"
         android:textSize="16sp"
         android:visibility="gone"
         app:drawableTopCompat="@drawable/ic_no_data"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

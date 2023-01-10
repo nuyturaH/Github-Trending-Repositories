@@ -12,6 +12,7 @@ public class GithubRepo {
     private String createdAt;
     private String htmlUrl;
     private Owner owner;
+    private boolean isFavourite;
 
     public GithubRepo(Long id, String name, String description, Integer stargazersCount,
                       String language, Integer forksCount, String createdAt, String htmlUrl, Owner owner) {
@@ -99,16 +100,24 @@ public class GithubRepo {
         this.htmlUrl = htmlUrl;
     }
 
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GithubRepo that = (GithubRepo) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(stargazersCount, that.stargazersCount) && Objects.equals(language, that.language) && Objects.equals(forksCount, that.forksCount) && Objects.equals(createdAt, that.createdAt) && Objects.equals(htmlUrl, that.htmlUrl) && Objects.equals(owner, that.owner);
+        return isFavourite == that.isFavourite && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(stargazersCount, that.stargazersCount) && Objects.equals(language, that.language) && Objects.equals(forksCount, that.forksCount) && Objects.equals(createdAt, that.createdAt) && Objects.equals(htmlUrl, that.htmlUrl) && Objects.equals(owner, that.owner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, stargazersCount, language, forksCount, createdAt, htmlUrl, owner);
+        return Objects.hash(id, name, description, stargazersCount, language, forksCount, createdAt, htmlUrl, owner, isFavourite);
     }
 }
