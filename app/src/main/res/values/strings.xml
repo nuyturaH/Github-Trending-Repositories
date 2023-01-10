@@ -12,4 +12,5 @@
     <string name="retry">Retry</string>
     <string name="swipe_down_refresh">%s\n\nSwipe down to refresh</string>
     <string name="no_repositories_found">No repositories found</string>
+    <string name="github_page">GitHub page</string>
 </resources>

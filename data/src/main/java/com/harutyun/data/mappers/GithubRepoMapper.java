@@ -15,7 +15,9 @@ public class GithubRepoMapper {
         return entityList.stream().map(this::mapToGithubRepo).collect(Collectors.toList());
     }
     public GithubRepo mapToGithubRepo(GithubRepoEntity entity) {
-        return new GithubRepo(entity.getId(), entity.getName(), entity.getDescription(), entity.getStargazersCount(), mapToOwner(entity.getOwner()));
+        return new GithubRepo(entity.getId(), entity.getName(), entity.getDescription(),
+                entity.getStargazersCount(), entity.getLanguage(), entity.getForksCount(),
+                entity.getCreatedAt(), entity.getHtmlUrl(), mapToOwner(entity.getOwner()));
     }
 
     public Owner mapToOwner(OwnerEntity entity) {

@@ -1,6 +1,7 @@
 package com.harutyun.githubtrendingrepositories.presentation.githubtrendingrepos.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -16,8 +17,11 @@ import com.harutyun.githubtrendingrepositories.databinding.ItemGithubRepoBinding
 
 public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubReposAdapter.ViewHolder> {
 
-    public GithubReposAdapter() {
+    private final OnItemClickListener mOnItemClickListener;
+
+    public GithubReposAdapter(OnItemClickListener onItemClickListener) {
         super(DIFF_CALLBACK);
+        mOnItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -40,6 +44,8 @@ public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubRepo
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.ic_person_box)
                 .into(holder.binding.ivAvatarItemRepo);
+
+        holder.binding.getRoot().setOnClickListener(v -> mOnItemClickListener.onItemClicked(repo));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,4 +69,8 @@ public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubRepo
                     return oldItem.equals(newItem);
                 }
             };
+
+    public interface OnItemClickListener {
+        void onItemClicked(GithubRepo githubRepo);
+    }
 }

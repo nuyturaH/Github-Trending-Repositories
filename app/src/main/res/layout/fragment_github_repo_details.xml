@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.Material3.CardView.Outlined"
@@ -29,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Github-Repo-Name" />
@@ -38,111 +39,70 @@
                 android:id="@+id/tv_description_repo_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:ellipsize="end"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_name_repo_details"
                 app:layout_constraintTop_toBottomOf="@+id/iv_avatar_repo_details"
                 tools:text="@tools:sample/lorem[400]" />
-
-            <ImageView
-                android:id="@+id/iv_star_repo_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/star"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_name_repo_details"
-                app:srcCompat="@drawable/ic_star" />
-
-            <ImageView
-                android:id="@+id/iv_date_repo_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:contentDescription="@string/star"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_fork_repo_details"
-                app:layout_constraintStart_toEndOf="@+id/tv_forks_repo_details"
-                app:layout_constraintTop_toTopOf="@+id/iv_fork_repo_details"
-                app:srcCompat="@drawable/ic_date" />
-
-            <ImageView
-                android:id="@+id/iv_circle_repo_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/star"
-                app:layout_constraintStart_toEndOf="@+id/tv_stargazers_count_repo_details"
-                app:layout_constraintTop_toBottomOf="@+id/tv_name_repo_details"
-                app:srcCompat="@drawable/ic_circle" />
-
-            <ImageView
-                android:id="@+id/iv_fork_repo_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:contentDescription="@string/star"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_circle_repo_details"
-                app:layout_constraintStart_toEndOf="@+id/tv_language_repo_details"
-                app:layout_constraintTop_toTopOf="@+id/iv_circle_repo_details"
-                app:srcCompat="@drawable/ic_fork" />
 
             <TextView
                 android:id="@+id/tv_stargazers_count_repo_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_star_repo_details"
-                app:layout_constraintStart_toEndOf="@+id/iv_star_repo_details"
-                app:layout_constraintTop_toTopOf="@+id/iv_star_repo_details"
+                android:layout_marginTop="24dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_star"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_repo_details"
                 tools:text="42345" />
 
             <TextView
                 android:id="@+id/tv_language_repo_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_circle_repo_details"
-                app:layout_constraintStart_toEndOf="@+id/iv_circle_repo_details"
-                app:layout_constraintTop_toTopOf="@+id/iv_circle_repo_details"
+                android:layout_marginStart="16dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_circle"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_stargazers_count_repo_details"
+                app:layout_constraintStart_toEndOf="@+id/tv_stargazers_count_repo_details"
+                app:layout_constraintTop_toTopOf="@+id/tv_stargazers_count_repo_details"
                 tools:text="Kotlin" />
 
             <TextView
                 android:id="@+id/tv_forks_repo_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_circle_repo_details"
-                app:layout_constraintStart_toEndOf="@+id/iv_fork_repo_details"
-                app:layout_constraintTop_toTopOf="@+id/iv_circle_repo_details"
+                android:layout_marginStart="16dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_fork"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_language_repo_details"
+                app:layout_constraintStart_toEndOf="@+id/tv_language_repo_details"
+                app:layout_constraintTop_toTopOf="@+id/tv_language_repo_details"
                 tools:text="34" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_avatar_repo_details"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_star_repo_details"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date_repo_details"
                 app:shapeAppearance="@style/roundedCornersImageView"
                 tools:srcCompat="@tools:sample/avatars" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iv_link_repo_details"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_login_repo_details"
-                app:layout_constraintStart_toEndOf="@+id/tv_login_repo_details"
-                app:layout_constraintTop_toTopOf="@+id/tv_login_repo_details"
-                app:shapeAppearance="@style/roundedCornersImageView"
-                tools:srcCompat="@drawable/ic_link" />
 
             <TextView
                 android:id="@+id/tv_login_repo_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_avatar_repo_details"
                 app:layout_constraintStart_toEndOf="@+id/iv_avatar_repo_details"
                 app:layout_constraintTop_toTopOf="@+id/iv_avatar_repo_details"
@@ -152,24 +112,32 @@
                 android:id="@+id/tv_link_repo_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:drawablePadding="4dp"
                 android:focusable="true"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="@string/github_page"
                 android:textColor="@color/blue"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_link"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_avatar_repo_details"
-                app:layout_constraintStart_toEndOf="@+id/iv_link_repo_details"
-                app:layout_constraintTop_toTopOf="@+id/iv_avatar_repo_details"
-                tools:text="GitHub page" />
+                app:layout_constraintStart_toEndOf="@+id/tv_login_repo_details"
+                app:layout_constraintTop_toTopOf="@+id/iv_avatar_repo_details" />
 
             <TextView
                 android:id="@+id/tv_date_repo_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_date_repo_details"
-                app:layout_constraintStart_toEndOf="@+id/iv_date_repo_details"
-                app:layout_constraintTop_toTopOf="@+id/iv_date_repo_details"
+                android:layout_marginTop="12dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_stargazers_count_repo_details"
                 tools:text="09.01.2023" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

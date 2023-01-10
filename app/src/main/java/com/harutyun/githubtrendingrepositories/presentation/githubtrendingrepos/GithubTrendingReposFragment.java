@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.paging.LoadState;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -197,7 +198,10 @@ public class GithubTrendingReposFragment extends Fragment {
     }
 
     private void setupTrendingRepositoriesRecyclerView() {
-        mGithubReposAdapter = new GithubReposAdapter();
+        mGithubReposAdapter = new GithubReposAdapter(githubRepo -> {
+            mGithubTrendingReposViewModel.setCurrentRepoMutableLiveData(githubRepo);
+            NavHostFragment.findNavController(this).navigate(R.id.action_currencyConverterFragment_to_githubRepoDetailsFragment);
+        });
         GithubReposLoadStateAdapter githubReposLoadStateAdapter = new GithubReposLoadStateAdapter(v -> mGithubReposAdapter.retry());
         GithubReposHeaderAdapter githubReposHeaderAdapter = new GithubReposHeaderAdapter();
         ConcatAdapter concatAdapter = new ConcatAdapter(githubReposHeaderAdapter, mGithubReposAdapter.withLoadStateFooter(githubReposLoadStateAdapter));
@@ -207,7 +211,7 @@ public class GithubTrendingReposFragment extends Fragment {
 
 
     private void initViewModel() {
-        mGithubTrendingReposViewModel = new ViewModelProvider(this).get(GithubTrendingReposViewModel.class);
+        mGithubTrendingReposViewModel = new ViewModelProvider(requireActivity()).get(GithubTrendingReposViewModel.class);
     }
 
     @Override
