@@ -1,10 +1,13 @@
 package com.harutyun.githubtrendingrepositories.di;
 
+import android.content.Context;
+
 import com.harutyun.data.BuildConfig;
 import com.harutyun.data.mappers.GithubRepoMapper;
 import com.harutyun.data.remote.GithubReposRemoteDataSource;
 import com.harutyun.data.remote.GithubReposService;
 import com.harutyun.data.remote.GithubReposServiceDataSource;
+import com.harutyun.data.remote.NetworkConnectionInterceptor;
 import com.harutyun.data.repository.GithubRepoRepositoryImpl;
 import com.harutyun.domain.repository.GithubRepoRepository;
 
@@ -13,6 +16,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -49,8 +53,16 @@ public class DataModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideOkHttpClient() {
-        return new OkHttpClient().newBuilder().build();
+    NetworkConnectionInterceptor provideConnectivityInterceptor(@ApplicationContext Context context) {
+        return new NetworkConnectionInterceptor(context);
+    }
+
+    @Singleton
+    @Provides
+    OkHttpClient provideOkHttpClient(NetworkConnectionInterceptor networkConnectionInterceptor) {
+        return new OkHttpClient().newBuilder()
+                .addInterceptor(networkConnectionInterceptor)
+                .build();
     }
 
     @Singleton

@@ -10,14 +10,17 @@
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <item name="colorSurface">@color/white</item>
+        <item name="toolbarSurfaceStyle">@color/white</item>
         <item name="colorOnSurfaceVariant">@color/white</item>
 
         <item name="colorSecondaryContainer">@color/blue</item>
         <item name="colorOnSecondaryContainer">@color/white</item>
+
+        <item name="colorAccent">@color/blue</item>
     </style>
 
     <style name="roundedCornersImageView">

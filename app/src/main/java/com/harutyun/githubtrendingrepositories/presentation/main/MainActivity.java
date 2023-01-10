@@ -1,11 +1,9 @@
 package com.harutyun.githubtrendingrepositories.presentation.main;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.view.View;
-
-import com.harutyun.githubtrendingrepositories.R;
 import com.harutyun.githubtrendingrepositories.databinding.ActivityMainBinding;
 
 import dagger.hilt.android.AndroidEntryPoint;

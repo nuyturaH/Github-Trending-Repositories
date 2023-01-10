@@ -26,7 +26,7 @@ public class GithubReposServiceDataSource implements GithubReposRemoteDataSource
 
     @Override
     public Flowable<PagingData<GithubRepo>> getTrendingReposByNameCreatedLaterThanXUseCase(String name, Date x) {
-        final String query = "created:>" + DateHelper.dateToString(x);
+        final String query = name + "+created:>" + DateHelper.dateToString(x);
         final Pager<Integer, GithubRepo> pager = new Pager<>(new PagingConfig(BuildConfig.GITHUB_REPOS_PAGE_SIZE), () -> new GithubReposPagingDataSource(mGithubReposService, query, mGithubRepoMapper));
         return PagingRx.getFlowable(pager);
     }

@@ -44,6 +44,7 @@ dependencies {
     // UI
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayoutVersion"
 
     // Navigation component
     implementation "androidx.navigation:navigation-fragment:$navVersion"
@@ -58,6 +59,16 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     implementation "com.google.dagger:hilt-android-compiler:$hiltVersion"
     annotationProcessor "com.google.dagger:hilt-compiler:$hiltVersion"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    implementation "androidx.paging:paging-rxjava3:$pagingVersion"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+    // AutoDispose
+    implementation "com.uber.autodispose2:autodispose-androidx-lifecycle:$autodisposeVersion"
 
 
     // Testing

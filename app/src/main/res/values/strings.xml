@@ -7,6 +7,9 @@
     <string name="star">star</string>
     <string name="last_day">Last day</string>
     <string name="last_week">Last week</string>
-    <string name="last_year">Last year</string>
+    <string name="last_month">Last month</string>
     <string name="clear">clear</string>
+    <string name="retry">Retry</string>
+    <string name="swipe_down_refresh">%s\n\nSwipe down to refresh</string>
+    <string name="no_repositories_found">No repositories found</string>
 </resources>

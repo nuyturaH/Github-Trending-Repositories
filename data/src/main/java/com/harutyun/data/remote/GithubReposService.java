@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 public interface GithubReposService {
 
     @GET("search/repositories?sort=stars&order=desc")
-    Single<GithubReposResponse> getRepositories(@Query("q") String query, @Query("page") Integer page);
+    Single<GithubReposResponse> getRepositories(@Query(value = "q", encoded = true) String query, @Query("page") Integer page);
 }

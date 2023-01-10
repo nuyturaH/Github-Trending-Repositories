@@ -34,6 +34,7 @@ public class GithubRepo {
     }
 
     public String getDescription() {
+        if (description == null || description.isEmpty()) return "N/A";
         return description;
     }
 
