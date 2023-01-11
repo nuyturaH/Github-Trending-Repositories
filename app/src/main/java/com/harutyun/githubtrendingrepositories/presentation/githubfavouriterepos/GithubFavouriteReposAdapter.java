@@ -47,9 +47,6 @@ public class GithubFavouriteReposAdapter extends ListAdapter<GithubRepo, GithubF
         holder.binding.getRoot().setOnClickListener(v -> mOnItemClickListener.onItemClicked(repo));
         holder.binding.ivFavouriteItemRepo.setOnClickListener(v -> {
             mOnItemClickListener.onFavouriteClicked(repo);
-
-            repo.setFavourite(false);
-            notifyItemRemoved(position);
         });
 
         if (repo.isFavourite()) {

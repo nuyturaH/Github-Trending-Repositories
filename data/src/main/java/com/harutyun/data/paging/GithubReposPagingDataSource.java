@@ -17,8 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.functions.BiFunction;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GithubReposPagingDataSource extends RxPagingSource<Integer, GithubRepo> {
@@ -42,39 +40,15 @@ public class GithubReposPagingDataSource extends RxPagingSource<Integer, GithubR
         int page = params.getKey() == null ? BuildConfig.GITHUB_REPOS_BEGINNING_PAGE : params.getKey();
 
 
-        return Single.zip(mGithubReposService.getRepositories(mQuery, page), mGithubReposLocalDataSource.getFavouriteRepos(), new BiFunction<GithubReposResponse, List<GithubRepoLocalEntity>, Single<LoadResult<Integer, GithubRepo>>>() {
-                    @Override
-                    public Single<LoadResult<Integer, GithubRepo>> apply(GithubReposResponse response, List<GithubRepoLocalEntity> repoLocalEntities) {
-
-//                        return mGithubReposService.getRepositories(mQuery, page)
-//                                .subscribeOn(Schedulers.io())
-//                                .map(response -> toLoadResult(response, page, params.getLoadSize()))
-//                                .onErrorReturn(LoadResult.Error::new);
-
-                        return Single
-                                .just(toLoadResult(response, repoLocalEntities, page, params.getLoadSize()))
-                                .onErrorReturn(LoadResult.Error::new);
-                    }
-                }
-        ).subscribeOn(Schedulers.io()).flatMap(x -> x).onErrorReturn(new Function<Throwable, LoadResult<Integer, GithubRepo>>() {
-            @Override
-            public LoadResult<Integer, GithubRepo> apply(Throwable throwable) throws Throwable {
-
-                return new LoadResult.Error<>(throwable);
-            }
-        });
+        return Single.zip(mGithubReposService.getRepositories(mQuery, page), mGithubReposLocalDataSource.getFavouriteRepos(), (response, repoLocalEntities) -> Single
+                .just(toLoadResult(response, repoLocalEntities, page, params.getLoadSize()))
+                .onErrorReturn(LoadResult.Error::new)
+        ).subscribeOn(Schedulers.io()).flatMap(x -> x).onErrorReturn(LoadResult.Error::new);
     }
 
 
     private LoadResult<Integer, GithubRepo> toLoadResult(@NonNull GithubReposResponse response, List<GithubRepoLocalEntity> repoLocalEntities, int page, int loadSize) {
         List<GithubRepo> repositories = mGithubRepoMapper.mapToGithubRepoList(response.getItems());
-
-        Single.zip(Single.just(repositories), mGithubReposLocalDataSource.getFavouriteRepos(), new BiFunction<List<GithubRepo>, List<GithubRepoLocalEntity>, LoadResult<Integer, GithubRepo>>() {
-            @Override
-            public LoadResult<Integer, GithubRepo> apply(List<GithubRepo> githubRepos, List<GithubRepoLocalEntity> repoLocalEntities) throws Throwable {
-                return null;
-            }
-        });
 
         for (GithubRepoLocalEntity entity : repoLocalEntities) {
             for (GithubRepo repo : repositories) {

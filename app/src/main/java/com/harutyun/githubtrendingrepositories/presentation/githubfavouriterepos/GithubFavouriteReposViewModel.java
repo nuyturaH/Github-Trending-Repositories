@@ -10,7 +10,9 @@ import com.harutyun.domain.models.GithubRepo;
 import com.harutyun.domain.usecases.GetFavouriteReposFromLocalDbUseCase;
 import com.harutyun.domain.usecases.RemoveFavouriteRepoFromLocalDbUseCase;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -39,6 +41,9 @@ public class GithubFavouriteReposViewModel extends ViewModel {
     private final MutableLiveData<String> failureMessageMutableLiveData = new MutableLiveData<>();
     public final LiveData<String> failureMessageLiveData = failureMessageMutableLiveData;
 
+    private List<GithubRepo> mFavouriteRepos = new ArrayList<>();
+    private String mSearchInput = "";
+
     @Inject
     public GithubFavouriteReposViewModel(GetFavouriteReposFromLocalDbUseCase getFavouriteReposFromLocalDbUseCase,
                                          RemoveFavouriteRepoFromLocalDbUseCase removeFavouriteRepoFromLocalDbUseCase) {
@@ -57,6 +62,7 @@ public class GithubFavouriteReposViewModel extends ViewModel {
                     } else {
                         setNoDataMutableLiveData(false);
                         setFavouriteReposMutableLiveData(favouriteRepos);
+                        mFavouriteRepos = favouriteRepos;
                     }
                 }, throwable -> Log.e(GithubFavouriteReposViewModel.class.getSimpleName(), "getFavouriteRepos: "+throwable.getLocalizedMessage() ));
     }
@@ -73,6 +79,12 @@ public class GithubFavouriteReposViewModel extends ViewModel {
                     public void onComplete() {
                         setCompletedMutableLiveData(true);
                         githubRepo.setFavourite(false);
+
+                        mFavouriteRepos = mFavouriteRepos.stream()
+                                .filter(repo -> !repo.getId().equals(githubRepo.getId()))
+                                .collect(Collectors.toList());
+
+                        searchRepos(mSearchInput);
                     }
 
                     @Override
@@ -80,6 +92,24 @@ public class GithubFavouriteReposViewModel extends ViewModel {
                         setFailureMessageMutableLiveData("Error: "+e.getLocalizedMessage());
                     }
                 });
+    }
+
+    public void searchRepos(String input) {
+        String inputLowerCase = input.toLowerCase();
+        mSearchInput = inputLowerCase;
+
+        List<GithubRepo> searchedList = mFavouriteRepos.stream()
+                .filter(repo -> repo.getName().toLowerCase().contains(inputLowerCase)
+                        || repo.getDescription().toLowerCase().contains(inputLowerCase))
+                .collect(Collectors.toList());
+
+        if (!searchedList.isEmpty()) {
+            setNoDataMutableLiveData(false);
+            setFavouriteReposMutableLiveData(searchedList);
+        } else {
+            setNoDataMutableLiveData(true);
+        }
+
     }
 
 

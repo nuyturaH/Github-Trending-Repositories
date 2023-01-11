@@ -1,6 +1,8 @@
 package com.harutyun.githubtrendingrepositories.presentation.githubfavouriterepos;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,29 @@ public class GithubFavouriteReposFragment extends Fragment {
 
         setupObservables();
 
+        setupViewListeners();
+
+    }
+
+    private void setupViewListeners() {
+        mBinding.etSearchFavouriteRepos.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String input = s.toString();
+
+                mGithubFavouriteReposViewModel.searchRepos(input);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void setupObservables() {
@@ -57,20 +82,19 @@ public class GithubFavouriteReposFragment extends Fragment {
 
         mGithubFavouriteReposViewModel.getNoDataLiveData().observe(getViewLifecycleOwner(), hasNoData -> {
             mBinding.tvNoDataFavouriteRepos.setVisibility(hasNoData ? View.VISIBLE : View.GONE);
+            mBinding.rvFavouriteRepos.setVisibility(hasNoData ? View.GONE : View.VISIBLE);
         });
 
         mGithubFavouriteReposViewModel.getCompletedLiveData().observe(getViewLifecycleOwner(), isCompleted -> {
             if (isCompleted) {
-                Snackbar.make(mBinding.getRoot(), getString(R.string.removed_from_favourites), Snackbar.LENGTH_SHORT)
-                        .show();
+                Snackbar.make(mBinding.getRoot(), getString(R.string.removed_from_favourites), Snackbar.LENGTH_SHORT).show();
                 mGithubFavouriteReposViewModel.setCompletedMutableLiveData(false);
             }
         });
 
         mGithubFavouriteReposViewModel.getFailureMessageLiveData().observe(getViewLifecycleOwner(), message -> {
             if (message != null) {
-                Snackbar.make(mBinding.getRoot(), message, Snackbar.LENGTH_SHORT)
-                        .show();
+                Snackbar.make(mBinding.getRoot(), message, Snackbar.LENGTH_SHORT).show();
                 mGithubFavouriteReposViewModel.setCompletedMutableLiveData(null);
             }
         });

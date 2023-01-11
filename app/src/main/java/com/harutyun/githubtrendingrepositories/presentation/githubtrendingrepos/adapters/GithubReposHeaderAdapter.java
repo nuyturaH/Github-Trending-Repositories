@@ -6,12 +6,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.harutyun.githubtrendingrepositories.R;
 import com.harutyun.githubtrendingrepositories.databinding.ItemHeaderBinding;
 
 public class GithubReposHeaderAdapter extends RecyclerView.Adapter<GithubReposHeaderAdapter.HeaderViewHolder> {
 
-    private String mHeader;
+    private final String mHeader;
     public GithubReposHeaderAdapter(String header) {
         mHeader = header;
     }
