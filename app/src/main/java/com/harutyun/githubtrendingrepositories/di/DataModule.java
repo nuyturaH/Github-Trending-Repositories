@@ -36,8 +36,10 @@ public class DataModule {
 
     @Singleton
     @Provides
-    GithubReposRemoteDataSource provideGithubReposRemoteDataSource(GithubReposService trendingRepositoriesApi, GithubRepoMapper githubRepoMapper) {
-        return new GithubReposServiceDataSource(trendingRepositoriesApi, githubRepoMapper);
+    GithubReposRemoteDataSource provideGithubReposRemoteDataSource(GithubReposService trendingRepositoriesApi,
+                                                                   GithubReposLocalDataSource githubReposLocalDataSource,
+                                                                   GithubRepoMapper githubRepoMapper) {
+        return new GithubReposServiceDataSource(trendingRepositoriesApi, githubReposLocalDataSource, githubRepoMapper);
     }
 
     @Singleton

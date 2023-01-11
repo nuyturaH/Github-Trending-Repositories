@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import com.harutyun.domain.models.Owner;
 
 @Entity(tableName = "github_repo_table")
-public class GithubRepoEntity {
+public class GithubRepoLocalEntity {
     @PrimaryKey
     private Long id;
     private String name;
@@ -20,6 +20,22 @@ public class GithubRepoEntity {
     @Embedded
     private Owner owner;
     private boolean isFavourite;
+
+
+    public GithubRepoLocalEntity(Long id, String name, String description, Integer stargazersCount,
+                                 String language, Integer forksCount, String createdAt,
+                                 String htmlUrl, Owner owner, boolean isFavourite) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.stargazersCount = stargazersCount;
+        this.language = language;
+        this.forksCount = forksCount;
+        this.createdAt = createdAt;
+        this.htmlUrl = htmlUrl;
+        this.owner = owner;
+        this.isFavourite = isFavourite;
+    }
 
     public Long getId() {
         return id;

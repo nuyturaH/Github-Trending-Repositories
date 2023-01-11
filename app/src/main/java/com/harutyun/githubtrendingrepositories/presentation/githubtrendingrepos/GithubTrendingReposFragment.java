@@ -25,7 +25,9 @@ import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.harutyun.data.remote.NoNetworkConnectionException;
+import com.harutyun.domain.models.GithubRepo;
 import com.harutyun.githubtrendingrepositories.R;
 import com.harutyun.githubtrendingrepositories.databinding.FragmentGithubTrendingReposBinding;
 import com.harutyun.githubtrendingrepositories.presentation.githubrepodetails.GithubRepoDetailsReposViewModel;
@@ -86,6 +88,33 @@ public class GithubTrendingReposFragment extends Fragment {
 
         mGithubTrendingReposViewModel.getNoDataLiveData().observe(getViewLifecycleOwner(), hasNoData -> {
             mBinding.tvNoDataTrendingRepos.setVisibility(hasNoData ? View.VISIBLE : View.GONE);
+        });
+
+        mGithubTrendingReposViewModel.getCompletedLiveData().observe(getViewLifecycleOwner(), isCompleted -> {
+            if (isCompleted) {
+                Snackbar.make(mBinding.getRoot(), getString(R.string.added_to_favourites), Snackbar.LENGTH_SHORT)
+                        .setAnchorView(mBinding.fabFavouritesTrendingRepos)
+                        .show();
+                mGithubTrendingReposViewModel.setCompletedMutableLiveData(false);
+            }
+        });
+
+        mGithubTrendingReposViewModel.getCompletedRemovingLiveData().observe(getViewLifecycleOwner(), isCompleted -> {
+            if (isCompleted) {
+                Snackbar.make(mBinding.getRoot(), getString(R.string.removed_from_favourites), Snackbar.LENGTH_SHORT)
+                        .setAnchorView(mBinding.fabFavouritesTrendingRepos)
+                        .show();
+                mGithubTrendingReposViewModel.setCompletedMutableLiveData(false);
+            }
+        });
+
+        mGithubTrendingReposViewModel.getFailureMessageLiveData().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Snackbar.make(mBinding.getRoot(), message, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(mBinding.fabFavouritesTrendingRepos)
+                        .show();
+                mGithubTrendingReposViewModel.setCompletedMutableLiveData(null);
+            }
         });
     }
 
@@ -183,7 +212,9 @@ public class GithubTrendingReposFragment extends Fragment {
     }
 
     private void getGithubTrendingRepos(DateRange dateRange) {
-        mGithubTrendingReposViewModel.getTrendingRepositoriesByMinDate(mBinding.etSearchTrendingRepos.getText().toString(), dateRange).to(autoDisposable(AndroidLifecycleScopeProvider.from(requireActivity()))).subscribe(pagingData -> mGithubReposAdapter.submitData(getLifecycle(), pagingData));
+        mGithubTrendingReposViewModel.getTrendingRepositoriesByMinDate(mBinding.etSearchTrendingRepos.getText().toString(), dateRange)
+                .to(autoDisposable(AndroidLifecycleScopeProvider.from(requireActivity())))
+                .subscribe(pagingData -> mGithubReposAdapter.submitData(getLifecycle(), pagingData));
     }
 
     private void searchModeOn() {
@@ -223,9 +254,22 @@ public class GithubTrendingReposFragment extends Fragment {
     }
 
     private void setupTrendingRepositoriesRecyclerView() {
-        mGithubReposAdapter = new GithubReposAdapter(githubRepo -> {
-            mGithubRepoDetailsReposViewModel.setCurrentRepoMutableLiveData(githubRepo);
-            NavHostFragment.findNavController(this).navigate(R.id.action_githubTrendingReposFragment_to_githubRepoDetailsFragment);
+
+        mGithubReposAdapter = new GithubReposAdapter(new GithubReposAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(GithubRepo githubRepo) {
+                mGithubRepoDetailsReposViewModel.setCurrentRepoMutableLiveData(githubRepo);
+                NavHostFragment.findNavController(GithubTrendingReposFragment.this).navigate(R.id.action_githubTrendingReposFragment_to_githubRepoDetailsFragment);
+            }
+
+            @Override
+            public void onFavouriteClicked(GithubRepo githubRepo) {
+                if (!githubRepo.isFavourite()) {
+                    mGithubTrendingReposViewModel.saveFavouriteRepoInLocalDb(githubRepo);
+                } else {
+                    mGithubTrendingReposViewModel.removeFavouriteRepoFromLocalDb(githubRepo);
+                }
+            }
         });
         GithubReposLoadStateAdapter githubReposLoadStateAdapter = new GithubReposLoadStateAdapter(v -> mGithubReposAdapter.retry());
         GithubReposHeaderAdapter githubReposHeaderAdapter = new GithubReposHeaderAdapter(getString(R.string.github_trending_repositories));

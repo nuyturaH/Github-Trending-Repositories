@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.harutyun.domain.models.GithubRepo;
 import com.harutyun.githubtrendingrepositories.R;
 import com.harutyun.githubtrendingrepositories.databinding.FragmentGithubFavouriteReposBinding;
@@ -57,6 +58,22 @@ public class GithubFavouriteReposFragment extends Fragment {
         mGithubFavouriteReposViewModel.getNoDataLiveData().observe(getViewLifecycleOwner(), hasNoData -> {
             mBinding.tvNoDataFavouriteRepos.setVisibility(hasNoData ? View.VISIBLE : View.GONE);
         });
+
+        mGithubFavouriteReposViewModel.getCompletedLiveData().observe(getViewLifecycleOwner(), isCompleted -> {
+            if (isCompleted) {
+                Snackbar.make(mBinding.getRoot(), getString(R.string.removed_from_favourites), Snackbar.LENGTH_SHORT)
+                        .show();
+                mGithubFavouriteReposViewModel.setCompletedMutableLiveData(false);
+            }
+        });
+
+        mGithubFavouriteReposViewModel.getFailureMessageLiveData().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Snackbar.make(mBinding.getRoot(), message, Snackbar.LENGTH_SHORT)
+                        .show();
+                mGithubFavouriteReposViewModel.setCompletedMutableLiveData(null);
+            }
+        });
     }
 
     private void setupTrendingRepositoriesRecyclerView() {
@@ -65,12 +82,12 @@ public class GithubFavouriteReposFragment extends Fragment {
             @Override
             public void onItemClicked(GithubRepo githubRepo) {
                 mGithubRepoDetailsReposViewModel.setCurrentRepoMutableLiveData(githubRepo);
-                NavHostFragment.findNavController(GithubFavouriteReposFragment.this).navigate(R.id.action_githubTrendingReposFragment_to_githubRepoDetailsFragment);
+                NavHostFragment.findNavController(GithubFavouriteReposFragment.this).navigate(R.id.action_githubFavouriteReposFragment_to_githubRepoDetailsFragment);
             }
 
             @Override
             public void onFavouriteClicked(GithubRepo githubRepo) {
-                
+                mGithubFavouriteReposViewModel.removeFavouriteRepoFromLocalDb(githubRepo);
             }
         });
         GithubReposHeaderAdapter githubReposHeaderAdapter = new GithubReposHeaderAdapter(getString(R.string.github_favourite_repositories));

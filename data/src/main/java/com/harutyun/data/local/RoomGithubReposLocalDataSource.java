@@ -1,9 +1,10 @@
 package com.harutyun.data.local;
 
-import com.harutyun.data.local.entities.GithubRepoEntity;
+import com.harutyun.data.local.entities.GithubRepoLocalEntity;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class RoomGithubReposLocalDataSource implements GithubReposLocalDataSource {
@@ -15,17 +16,17 @@ public class RoomGithubReposLocalDataSource implements GithubReposLocalDataSourc
     }
 
     @Override
-    public Single<List<GithubRepoEntity>> getFavouriteRepos() {
+    public Single<List<GithubRepoLocalEntity>> getFavouriteRepos() {
         return mGithubReposDao.getAllFavouriteRepos();
     }
 
     @Override
-    public void insertRepo(GithubRepoEntity entity) {
-        mGithubReposDao.insertRepo(entity);
+    public Completable insertRepo(GithubRepoLocalEntity entity) {
+        return mGithubReposDao.insertRepo(entity);
     }
 
     @Override
-    public void deleteRepo(GithubRepoEntity entity) {
-        mGithubReposDao.deleteRepo(entity);
+    public Completable deleteRepo(GithubRepoLocalEntity entity) {
+        return mGithubReposDao.deleteRepo(entity);
     }
 }

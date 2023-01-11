@@ -1,16 +1,17 @@
 package com.harutyun.data.local;
 
-import com.harutyun.data.local.entities.GithubRepoEntity;
+import com.harutyun.data.local.entities.GithubRepoLocalEntity;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface GithubReposLocalDataSource {
 
-    Single<List<GithubRepoEntity>> getFavouriteRepos();
+    Single<List<GithubRepoLocalEntity>> getFavouriteRepos();
 
-    void insertRepo(GithubRepoEntity entity);
+    Completable insertRepo(GithubRepoLocalEntity entity);
 
-    void deleteRepo(GithubRepoEntity entity);
+    Completable deleteRepo(GithubRepoLocalEntity entity);
 }

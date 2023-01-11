@@ -15,7 +15,7 @@ public class GithubRepo {
     private boolean isFavourite;
 
     public GithubRepo(Long id, String name, String description, Integer stargazersCount,
-                      String language, Integer forksCount, String createdAt, String htmlUrl, Owner owner) {
+                      String language, Integer forksCount, String createdAt, String htmlUrl, Owner owner, boolean isFavourite) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -25,6 +25,7 @@ public class GithubRepo {
         this.createdAt = createdAt;
         this.htmlUrl = htmlUrl;
         this.owner = owner;
+        this.isFavourite = isFavourite;
     }
 
     public Long getId() {

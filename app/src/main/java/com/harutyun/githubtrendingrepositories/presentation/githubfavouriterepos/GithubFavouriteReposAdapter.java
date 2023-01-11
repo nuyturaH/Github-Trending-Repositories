@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +45,18 @@ public class GithubFavouriteReposAdapter extends ListAdapter<GithubRepo, GithubF
                 .into(holder.binding.ivAvatarItemRepo);
 
         holder.binding.getRoot().setOnClickListener(v -> mOnItemClickListener.onItemClicked(repo));
-        holder.binding.ivFavouriteItemRepo.setOnClickListener(v -> mOnItemClickListener.onFavouriteClicked(repo));
+        holder.binding.ivFavouriteItemRepo.setOnClickListener(v -> {
+            mOnItemClickListener.onFavouriteClicked(repo);
+
+            repo.setFavourite(false);
+            notifyItemRemoved(position);
+        });
+
+        if (repo.isFavourite()) {
+            holder.binding.ivFavouriteItemRepo.setBackgroundResource(R.drawable.ic_favorite_filled);
+        } else {
+            holder.binding.ivFavouriteItemRepo.setBackgroundResource(R.drawable.ic_favorite);
+        }
     }
 
 
