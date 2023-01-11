@@ -15,4 +15,6 @@
     <string name="github_page">GitHub page</string>
     <string name="favourites">Favourites</string>
     <string name="github_favourite_repositories">Github Favourite Repositories</string>
+    <string name="removed_from_favourites">Repository is removed from Favourites</string>
+    <string name="added_to_favourites">Repository is added to Favourites</string>
 </resources>
