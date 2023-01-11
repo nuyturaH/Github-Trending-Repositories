@@ -5,6 +5,8 @@ import androidx.paging.PagingState;
 import androidx.paging.rxjava3.RxPagingSource;
 
 import com.harutyun.data.BuildConfig;
+import com.harutyun.data.local.GithubReposLocalDataSource;
+import com.harutyun.data.local.entities.GithubRepoLocalEntity;
 import com.harutyun.data.mappers.GithubRepoMapper;
 import com.harutyun.data.remote.GithubReposService;
 import com.harutyun.data.remote.entities.GithubReposResponse;
@@ -20,11 +22,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class GithubReposPagingDataSource extends RxPagingSource<Integer, GithubRepo> {
 
     private final GithubReposService mGithubReposService;
+    private final GithubReposLocalDataSource mGithubReposLocalDataSource;
     private final String mQuery;
     private final GithubRepoMapper mGithubRepoMapper;
 
-    public GithubReposPagingDataSource(GithubReposService githubReposService, String query, GithubRepoMapper githubRepoMapper) {
+    public GithubReposPagingDataSource(GithubReposService githubReposService, GithubReposLocalDataSource githubReposLocalDataSource,
+                                       String query, GithubRepoMapper githubRepoMapper) {
         mGithubReposService = githubReposService;
+        mGithubReposLocalDataSource = githubReposLocalDataSource;
         mQuery = query;
         mGithubRepoMapper = githubRepoMapper;
     }
@@ -34,15 +39,26 @@ public class GithubReposPagingDataSource extends RxPagingSource<Integer, GithubR
     public Single<LoadResult<Integer, GithubRepo>> loadSingle(@NotNull LoadParams<Integer> params) {
         int page = params.getKey() == null ? BuildConfig.GITHUB_REPOS_BEGINNING_PAGE : params.getKey();
 
-        return mGithubReposService.getRepositories(mQuery, page)
-                .subscribeOn(Schedulers.io())
-                .map(response -> toLoadResult(response, page, params.getLoadSize()))
-                .onErrorReturn(LoadResult.Error::new);
+
+        return Single.zip(mGithubReposService.getRepositories(mQuery, page), mGithubReposLocalDataSource.getFavouriteRepos(), (response, repoLocalEntities) -> Single
+                .just(toLoadResult(response, repoLocalEntities, page, params.getLoadSize()))
+                .onErrorReturn(LoadResult.Error::new)
+        ).subscribeOn(Schedulers.io()).flatMap(x -> x).onErrorReturn(LoadResult.Error::new);
     }
 
 
-    private LoadResult<Integer, GithubRepo> toLoadResult(@NonNull GithubReposResponse response, int page, int loadSize) {
+    private LoadResult<Integer, GithubRepo> toLoadResult(@NonNull GithubReposResponse response, List<GithubRepoLocalEntity> repoLocalEntities, int page, int loadSize) {
         List<GithubRepo> repositories = mGithubRepoMapper.mapToGithubRepoList(response.getItems());
+
+        for (GithubRepoLocalEntity entity : repoLocalEntities) {
+            for (GithubRepo repo : repositories) {
+                if (entity.getId().equals(repo.getId())) {
+                    repo.setFavourite(entity.isFavourite());
+                }
+            }
+        }
+
+
         Integer prevKey = (page == BuildConfig.GITHUB_REPOS_BEGINNING_PAGE) ? null : page - 1;
         Integer nextKey = (repositories.isEmpty()) ? null : page + (loadSize / BuildConfig.GITHUB_REPOS_PAGE_SIZE);
 

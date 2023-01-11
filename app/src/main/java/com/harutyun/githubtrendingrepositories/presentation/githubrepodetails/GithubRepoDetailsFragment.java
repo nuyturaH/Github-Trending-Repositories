@@ -16,13 +16,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.harutyun.githubtrendingrepositories.R;
 import com.harutyun.githubtrendingrepositories.databinding.FragmentGithubRepoDetailsBinding;
-import com.harutyun.githubtrendingrepositories.presentation.githubtrendingrepos.GithubTrendingReposViewModel;
 
 
 public class GithubRepoDetailsFragment extends Fragment {
 
     private FragmentGithubRepoDetailsBinding mBinding;
-    private GithubTrendingReposViewModel mGithubTrendingReposViewModel;
+    private GithubRepoDetailsReposViewModel mGithubRepoDetailsReposViewModel;
     private String mGithubPageUrl;
 
 
@@ -45,7 +44,7 @@ public class GithubRepoDetailsFragment extends Fragment {
 
 
     private void setupObservables() {
-        mGithubTrendingReposViewModel.getCurrentRepoDataLiveData().observe(getViewLifecycleOwner(), githubRepo -> {
+        mGithubRepoDetailsReposViewModel.getCurrentRepoDataLiveData().observe(getViewLifecycleOwner(), githubRepo -> {
             mBinding.tvNameRepoDetails.setText(githubRepo.getName());
             mBinding.tvDescriptionRepoDetails.setText(githubRepo.getDescription());
             mBinding.tvStargazersCountRepoDetails.setText(String.valueOf(githubRepo.getStargazersCount()));
@@ -74,7 +73,7 @@ public class GithubRepoDetailsFragment extends Fragment {
 
 
     private void initViewModel() {
-        mGithubTrendingReposViewModel = new ViewModelProvider(requireActivity()).get(GithubTrendingReposViewModel.class);
+        mGithubRepoDetailsReposViewModel = new ViewModelProvider(requireActivity()).get(GithubRepoDetailsReposViewModel.class);
     }
 
     @Override

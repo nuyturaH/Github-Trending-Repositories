@@ -31,6 +31,8 @@ ext {
     pagingVersion = "3.1.1"
     glideVersion = "4.14.2"
     autodisposeVersion = "2.1.1"
+    roomVersion = "2.4.3"
+    rxAndroidVersion = "3.0.2"
 
     junitVersion = "4.13.2"
     androidJunitVersion = "1.1.5"

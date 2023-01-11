@@ -58,6 +58,9 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     implementation "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     annotationProcessor "com.google.dagger:hilt-compiler:$hiltVersion"
 
     // Paging
@@ -69,6 +72,12 @@ dependencies {
 
     // AutoDispose
     implementation "com.uber.autodispose2:autodispose-androidx-lifecycle:$autodisposeVersion"
+
+    // Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+
+    // RxAndroid
+    implementation "io.reactivex.rxjava3:rxandroid:$rxAndroidVersion"
 
 
     // Testing

@@ -3,7 +3,7 @@
     <string name="search_repositories">Search repositories</string>
     <string name="search">Search</string>
     <string name="filter_by_date_range">Filter by Date range</string>
-    <string name="github_trending_repositories">Github trending repositories</string>
+    <string name="github_trending_repositories">Github Trending Repositories</string>
     <string name="star">star</string>
     <string name="last_day">Last day</string>
     <string name="last_week">Last week</string>
@@ -13,4 +13,9 @@
     <string name="swipe_down_refresh">%s\n\nSwipe down to refresh</string>
     <string name="no_repositories_found">No repositories found</string>
     <string name="github_page">GitHub page</string>
+    <string name="favourites">Favourites</string>
+    <string name="github_favourite_repositories">Github Favourite Repositories</string>
+    <string name="removed_from_favourites">Repository is removed from Favourites</string>
+    <string name="added_to_favourites">Repository is added to Favourites</string>
+    <string name="your_favourites_list_is_empty">Your favourites list is empty</string>
 </resources>

@@ -1,8 +1,14 @@
-package com.harutyun.domain.models;
+package com.harutyun.data.local.entities;
 
-import java.util.Objects;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class GithubRepo {
+import com.harutyun.domain.models.Owner;
+
+@Entity(tableName = "github_repo_table")
+public class GithubRepoLocalEntity {
+    @PrimaryKey
     private Long id;
     private String name;
     private String description;
@@ -11,11 +17,14 @@ public class GithubRepo {
     private Integer forksCount;
     private String createdAt;
     private String htmlUrl;
+    @Embedded
     private Owner owner;
     private boolean isFavourite;
 
-    public GithubRepo(Long id, String name, String description, Integer stargazersCount,
-                      String language, Integer forksCount, String createdAt, String htmlUrl, Owner owner, boolean isFavourite) {
+
+    public GithubRepoLocalEntity(Long id, String name, String description, Integer stargazersCount,
+                                 String language, Integer forksCount, String createdAt,
+                                 String htmlUrl, Owner owner, boolean isFavourite) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -45,7 +54,6 @@ public class GithubRepo {
     }
 
     public String getDescription() {
-        if (description == null || description.isEmpty()) return "N/A";
         return description;
     }
 
@@ -59,14 +67,6 @@ public class GithubRepo {
 
     public void setStargazersCount(Integer stargazersCount) {
         this.stargazersCount = stargazersCount;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
     }
 
     public String getLanguage() {
@@ -86,7 +86,7 @@ public class GithubRepo {
     }
 
     public String getCreatedAt() {
-        return createdAt.split("T")[0];
+        return createdAt;
     }
 
     public void setCreatedAt(String createdAt) {
@@ -101,24 +101,19 @@ public class GithubRepo {
         this.htmlUrl = htmlUrl;
     }
 
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
     public boolean isFavourite() {
         return isFavourite;
     }
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GithubRepo that = (GithubRepo) o;
-        return isFavourite == that.isFavourite && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(stargazersCount, that.stargazersCount) && Objects.equals(language, that.language) && Objects.equals(forksCount, that.forksCount) && Objects.equals(createdAt, that.createdAt) && Objects.equals(htmlUrl, that.htmlUrl) && Objects.equals(owner, that.owner);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, stargazersCount, language, forksCount, createdAt, htmlUrl, owner, isFavourite);
     }
 }

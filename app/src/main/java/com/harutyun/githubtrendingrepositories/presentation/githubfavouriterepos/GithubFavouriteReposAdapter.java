@@ -1,11 +1,11 @@
-package com.harutyun.githubtrendingrepositories.presentation.githubtrendingrepos.adapters;
+package com.harutyun.githubtrendingrepositories.presentation.githubfavouriterepos;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -14,11 +14,11 @@ import com.harutyun.domain.models.GithubRepo;
 import com.harutyun.githubtrendingrepositories.R;
 import com.harutyun.githubtrendingrepositories.databinding.ItemGithubRepoBinding;
 
-public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubReposAdapter.ViewHolder> {
+public class GithubFavouriteReposAdapter extends ListAdapter<GithubRepo, GithubFavouriteReposAdapter.ViewHolder> {
 
     private final OnItemClickListener mOnItemClickListener;
 
-    public GithubReposAdapter(OnItemClickListener onItemClickListener) {
+    public GithubFavouriteReposAdapter(OnItemClickListener onItemClickListener) {
         super(DIFF_CALLBACK);
         mOnItemClickListener = onItemClickListener;
     }
@@ -47,7 +47,6 @@ public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubRepo
         holder.binding.getRoot().setOnClickListener(v -> mOnItemClickListener.onItemClicked(repo));
         holder.binding.ivFavouriteItemRepo.setOnClickListener(v -> {
             mOnItemClickListener.onFavouriteClicked(repo);
-            notifyItemChanged(position);
         });
 
         if (repo.isFavourite()) {
@@ -56,6 +55,7 @@ public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubRepo
             holder.binding.ivFavouriteItemRepo.setBackgroundResource(R.drawable.ic_favorite);
         }
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ItemGithubRepoBinding binding;
@@ -81,7 +81,6 @@ public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubRepo
 
     public interface OnItemClickListener {
         void onItemClicked(GithubRepo githubRepo);
-
         void onFavouriteClicked(GithubRepo githubRepo);
     }
 }

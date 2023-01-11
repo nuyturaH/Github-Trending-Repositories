@@ -3,22 +3,22 @@ package com.harutyun.domain.models;
 import java.util.Objects;
 
 public class Owner {
-    private Long id;
+    private Long ownerId;
     private String login;
     private String avatarUrl;
 
-    public Owner(Long id, String login, String avatarUrl) {
-        this.id = id;
+    public Owner(Long ownerId, String login, String avatarUrl) {
+        this.ownerId = ownerId;
         this.login = login;
         this.avatarUrl = avatarUrl;
     }
 
-    public Long getId() {
-        return id;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getLogin() {
@@ -42,11 +42,11 @@ public class Owner {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Owner owner = (Owner) o;
-        return Objects.equals(id, owner.id) && Objects.equals(login, owner.login) && Objects.equals(avatarUrl, owner.avatarUrl);
+        return Objects.equals(ownerId, owner.ownerId) && Objects.equals(login, owner.login) && Objects.equals(avatarUrl, owner.avatarUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, avatarUrl);
+        return Objects.hash(ownerId, login, avatarUrl);
     }
 }
