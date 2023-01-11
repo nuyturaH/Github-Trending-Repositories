@@ -59,7 +59,8 @@ public class GithubReposPagingDataSource extends RxPagingSource<Integer, GithubR
         ).subscribeOn(Schedulers.io()).flatMap(x -> x).onErrorReturn(new Function<Throwable, LoadResult<Integer, GithubRepo>>() {
             @Override
             public LoadResult<Integer, GithubRepo> apply(Throwable throwable) throws Throwable {
-                return null;
+
+                return new LoadResult.Error<>(throwable);
             }
         });
     }
