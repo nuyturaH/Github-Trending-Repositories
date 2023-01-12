@@ -23,6 +23,8 @@ ext {
     appcompatVersion = "1.5.1"
     materialVersion = "1.7.0"
     swiperefreshlayoutVersion = "1.1.0"
+    slidingpanelayoutVersion = "1.2.0"
+    transitionVersion = "1.4.1"
     navVersion = "2.5.3"
     retrofitVersion = "2.9.0"
     okhttpVersion = "4.10.0"

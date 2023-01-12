@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.harutyun.githubtrendingrepositories.R;
 import com.harutyun.githubtrendingrepositories.databinding.FragmentGithubRepoDetailsBinding;
+import com.harutyun.githubtrendingrepositories.helper.UiHelper;
 
 
 public class GithubRepoDetailsFragment extends Fragment {
@@ -28,6 +30,7 @@ public class GithubRepoDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentGithubRepoDetailsBinding.inflate(inflater, container, false);
+        resizeFragment(mBinding.getRoot());
         return mBinding.getRoot();
     }
 
@@ -74,6 +77,12 @@ public class GithubRepoDetailsFragment extends Fragment {
 
     private void initViewModel() {
         mGithubRepoDetailsReposViewModel = new ViewModelProvider(requireActivity()).get(GithubRepoDetailsReposViewModel.class);
+    }
+
+    private void resizeFragment(View view) {
+        LayoutParams params = view.getLayoutParams();
+        params.height = UiHelper.getDisplayHeight(requireActivity());
+        mBinding.getRoot().setLayoutParams(params);
     }
 
     @Override

@@ -45,6 +45,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayoutVersion"
+    implementation "androidx.slidingpanelayout:slidingpanelayout:$slidingpanelayoutVersion"
+    implementation "androidx.transition:transition:$transitionVersion"
 
     // Navigation component
     implementation "androidx.navigation:navigation-fragment:$navVersion"
