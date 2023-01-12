@@ -4,6 +4,7 @@ import static com.harutyun.githubtrendingrepositories.helper.UiHelper.hideKeyboa
 import static autodispose2.AutoDispose.autoDisposable;
 
 import android.os.Bundle;
+import android.transition.AutoTransition;
 import android.transition.ChangeBounds;
 import android.transition.Slide;
 import android.transition.Transition;
@@ -17,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -24,7 +26,9 @@ import androidx.paging.LoadState;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.slidingpanelayout.widget.SlidingPaneLayout;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.harutyun.data.remote.NoNetworkConnectionException;
 import com.harutyun.domain.models.GithubRepo;
@@ -57,6 +61,7 @@ public class GithubTrendingReposFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        overrideBackButton();
 
         initViewModel();
 
@@ -209,6 +214,36 @@ public class GithubTrendingReposFragment extends Fragment {
         mBinding.fabFavouritesTrendingRepos.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_githubTrendingReposFragment_to_githubFavouriteReposFragment);
         });
+
+        // Sliding pane layout
+        AutoTransition autoTransition = new AutoTransition();
+        autoTransition.setDuration(200);
+        mBinding.splTrendingRepos.addPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(@NonNull View panel, float slideOffset) {
+
+            }
+
+            @Override
+            public void onPanelOpened(@NonNull View panel) {
+                TransitionManager.beginDelayedTransition(mBinding.getRoot(), autoTransition);
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mBinding.splTrendingRepos.getLayoutParams();
+                params.setBehavior(null);
+                mBinding.splTrendingRepos.requestLayout();
+                mBinding.abTrendingRepos.setVisibility(View.GONE);
+                mBinding.fabFavouritesTrendingRepos.hide();
+            }
+
+            @Override
+            public void onPanelClosed(@NonNull View panel) {
+                TransitionManager.beginDelayedTransition(mBinding.getRoot(), autoTransition);
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mBinding.splTrendingRepos.getLayoutParams();
+                params.setBehavior(new AppBarLayout.ScrollingViewBehavior());
+                mBinding.splTrendingRepos.requestLayout();
+                mBinding.abTrendingRepos.setVisibility(View.VISIBLE);
+                mBinding.fabFavouritesTrendingRepos.show();
+            }
+        });
     }
 
     private void getGithubTrendingRepos(DateRange dateRange) {
@@ -254,12 +289,11 @@ public class GithubTrendingReposFragment extends Fragment {
     }
 
     private void setupTrendingRepositoriesRecyclerView() {
-
         mGithubReposAdapter = new GithubReposAdapter(new GithubReposAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(GithubRepo githubRepo) {
                 mGithubRepoDetailsReposViewModel.setCurrentRepoMutableLiveData(githubRepo);
-                NavHostFragment.findNavController(GithubTrendingReposFragment.this).navigate(R.id.action_githubTrendingReposFragment_to_githubRepoDetailsFragment);
+                mBinding.splTrendingRepos.openPane();
             }
 
             @Override
@@ -271,11 +305,21 @@ public class GithubTrendingReposFragment extends Fragment {
                 }
             }
         });
+
+        mGithubReposAdapter.setGetFirstRepo(githubRepo -> {
+            if (mGithubRepoDetailsReposViewModel.getCurrentRepoDataLiveData().getValue() == null)
+                mGithubRepoDetailsReposViewModel.setCurrentRepoMutableLiveData(githubRepo);
+        });
         GithubReposLoadStateAdapter githubReposLoadStateAdapter = new GithubReposLoadStateAdapter(v -> mGithubReposAdapter.retry());
         GithubReposHeaderAdapter githubReposHeaderAdapter = new GithubReposHeaderAdapter(getString(R.string.github_trending_repositories));
         ConcatAdapter concatAdapter = new ConcatAdapter(githubReposHeaderAdapter, mGithubReposAdapter.withLoadStateFooter(githubReposLoadStateAdapter));
         mBinding.rvTrendingRepos.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
         mBinding.rvTrendingRepos.setAdapter(concatAdapter);
+    }
+
+    private void overrideBackButton() {
+        requireActivity().getOnBackPressedDispatcher()
+                .addCallback(getViewLifecycleOwner(), new GithubTrendingReposOnBackPressedCallback(mBinding.splTrendingRepos));
     }
 
 

@@ -17,6 +17,7 @@ import com.harutyun.githubtrendingrepositories.databinding.ItemGithubRepoBinding
 public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubReposAdapter.ViewHolder> {
 
     private final OnItemClickListener mOnItemClickListener;
+    private GetFirstRepo mGetFirstRepo;
 
     public GithubReposAdapter(OnItemClickListener onItemClickListener) {
         super(DIFF_CALLBACK);
@@ -27,6 +28,7 @@ public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubRepo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemGithubRepoBinding binding = ItemGithubRepoBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        mGetFirstRepo.getFirstRepo(getItem(0));
         return new ViewHolder(binding);
 
     }
@@ -83,5 +85,14 @@ public class GithubReposAdapter extends PagingDataAdapter<GithubRepo, GithubRepo
         void onItemClicked(GithubRepo githubRepo);
 
         void onFavouriteClicked(GithubRepo githubRepo);
+    }
+
+    public interface GetFirstRepo {
+        void getFirstRepo(GithubRepo githubRepo);
+    }
+
+
+    public void setGetFirstRepo(GetFirstRepo mGetFirstRepo) {
+        this.mGetFirstRepo = mGetFirstRepo;
     }
 }

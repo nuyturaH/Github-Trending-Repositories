@@ -8,6 +8,7 @@
     tools:context=".presentation.githubtrendingrepos.GithubTrendingReposFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ab_trending_repos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
@@ -182,21 +183,38 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/srl_trending_repos"
-
+    <androidx.slidingpanelayout.widget.SlidingPaneLayout
+        android:id="@+id/spl_trending_repos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:visibility="gone">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trending_repos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_github_repo" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl_trending_repos"
+
+            android:layout_width="550dp"
+            android:layout_height="wrap_content"
+            tools:visibility="visible">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trending_repos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_github_repo" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/detail_container"
+            android:name="com.harutyun.githubtrendingrepositories.presentation.githubrepodetails.GithubRepoDetailsFragment"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_github_repo_details" />
+
+
+    </androidx.slidingpanelayout.widget.SlidingPaneLayout>
 
     <TextView
         android:id="@+id/tv_error_trending_repos"
@@ -209,7 +227,7 @@
         android:visibility="gone"
         app:drawableTopCompat="@drawable/ic_no_network"
         tools:text="Some error happend. Swipe down to refresh"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_no_data_trending_repos"
